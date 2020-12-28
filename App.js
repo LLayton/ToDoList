@@ -1,21 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {configure} from 'mobx';
+import { Provider } from 'mobx-react';
+import {listStore} from './src/store/TaskLisStore';
+import NavigationTab from './src/navigation/NavigationTab';
+import { NavigationContainer } from '@react-navigation/native';
 
+configure({
+  enforceActions:'never'
+});
 export default function App() {
+  const stores = {listStore}
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider {...stores}>
+      <NavigationContainer>
+        <NavigationTab/>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
