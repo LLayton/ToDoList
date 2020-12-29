@@ -1,8 +1,10 @@
-import React,{useState,useEffect} from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet,Button } from 'react-native';
+import React,{useState,useContext} from 'react';
+import { TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { Card } from 'react-native-elements';
 import {observer,inject} from 'mobx-react';
+import { Button } from 'react-native-elements';
+import TaskContext from '../../store/ClassTask'
 
 const UpdateTask = (props) => {
   //Avoir les informations passé en paramètre
@@ -13,8 +15,7 @@ const UpdateTask = (props) => {
   const[Titre,setTitre]=useState(Task.GetTitle());
   const[Description,setDescription]=useState(Task.GetDesc());
   const[checked,setChecked]=useState(Task.GetState());
-  
-
+  const context = useContext(TaskContext)
 
   const UpTask  =()=>{
     if(Titre!="" && Description!="" ){
@@ -80,7 +81,11 @@ const UpdateTask = (props) => {
         console.log('une erreur est survenue');
     }
     listStore.saveList();
-    listStore.setTask(Task);
+    navigation.goBack();
+
+    }
+    else{
+      context.Alerte()
     }
 }
 
@@ -137,9 +142,10 @@ const UpdateTask = (props) => {
             <View  style={{flexDirection:'row',justifyContent:'space-around'}}>
             <Button onPress={() => { 
               UpTask() ;
-              navigation.goBack();
-            }} title="Modifier la tâche" />
-            <Button onPress={() => navigation.goBack()} title="Retour" />
+            }} title="Modifier la tâche"
+            type="outline"
+            />
+            <Button onPress={() => navigation.goBack()} title="Retour"  type="outline"/>
             </View>   
             </Card>
         </View>

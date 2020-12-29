@@ -1,9 +1,10 @@
 import React,{useState,useContext} from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet,Button } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text  } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import TaskContext from '../../store/ClassTask'
-import {listStore} from '../../store/TaskLisStore'
+import { Button } from 'react-native-elements';
 import {observer,inject} from 'mobx-react'
+import { Card } from 'react-native-elements';
 
 const AddTask = (props) => {
   const{navigation,listStore}=props;
@@ -12,6 +13,7 @@ const AddTask = (props) => {
   const[checked,setChecked]=useState('Todo');
     //Contect contenant la fonction permettant de créer une task
   const context = useContext(TaskContext)
+
   const createTask  =()=>{
     if(Titre!="" && Description!="" ){
      const task =context.CreateOneTask(checked,Titre,Description)
@@ -29,12 +31,18 @@ const AddTask = (props) => {
         console.log('une erreur est survenue');
     }
     listStore.saveList();
+    navigation.goBack();
+    }else{
+      context.Alerte()
     }
+    
 }
     return (
       
         <View style={{ flex: 1, backgroundColor: '#fff', alignItems: 'stretch', justifyContent: 'center'}}>  
-          <Text>Créer une nouvelle tâche</Text>
+        <Card > 
+        <Card.Title>Créer une nouvelle tâche</Card.Title>
+        <Card.Divider/>
               <Text>Titre de la tâche </Text>
               <TextInput
               style={{borderWidth:1}}
@@ -82,11 +90,15 @@ const AddTask = (props) => {
             <View  style={{flexDirection:'row',justifyContent:'space-around'}}>
             <Button onPress={() => {
             createTask();
-            navigation.goBack();
+            
             }
-            } title="Créer votre tâche" />
-            <Button onPress={() => navigation.goBack()} title="Retour" />
+            } title="Créer votre tâche"
+            type="outline"
+            />
+            <Button onPress={() => navigation.goBack()} title="Retour" type="outline"/>            
             </View>   
+            </Card>
+
         </View>
       
       

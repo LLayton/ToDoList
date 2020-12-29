@@ -1,4 +1,6 @@
 import React from 'react';
+import { Alert } from 'react-native';
+
 class TaskClass  {
     state='';
     title='';
@@ -44,7 +46,16 @@ const Task = {
     CreateOneTask:  (state,title,desc) => {
          return new TaskClass(state,title,desc);
     },
-    
+    Alerte : ()=>{
+            Alert.alert(
+                "Erreur",
+                "Un des champs saisie est vide",
+                [
+                 { text: "OK" }
+                ],
+                 { cancelable: false }
+            );
+    }
 };
 
 

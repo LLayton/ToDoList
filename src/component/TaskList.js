@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text,Button,ScrollView } from 'react-native';
+import { View, Text,ScrollView } from 'react-native';
 import { Card } from 'react-native-elements';
 import {observer,inject} from 'mobx-react';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-elements';
+
 const TaskList = (props) => {
     const{Liste,title,listStore,state}=props;
     const navigation=useNavigation();//Dans un composant on ne peux pas avoir navigation dans les props
 
 return(
-<View style={{flex:0.95}} contentContainerStyle={{flexGrow:0}}>
+<View style={{flex:0.9}} contentContainerStyle={{flexGrow:0}}>
       <ScrollView  >
         <Card > 
         <Card.Title>{title}</Card.Title>
@@ -23,9 +25,10 @@ return(
                         <Text style={{borderWidth:1,fontSize:15,fontWeight: "bold"}}>Descripton</Text>
                         <Text style={{borderWidth:1,fontSize:15}}>{task.GetDesc()}</Text>
                       </View>
-                      <View style={{flexDirection:'row',justifyContent: 'space-around',flex:0.5}}>
+                      <View style={{flexDirection:'column',justifyContent: 'space-around',flex:0.5}}>
                       <Button 
                       title='Modifier'
+                      type="outline"
                       onPress={()=>{
                         listStore.setTask(task);
                         navigation.navigate("UpdateTask",{
@@ -34,6 +37,7 @@ return(
                       }}/>
                       <Button
                       title='Supprimer'
+                      type="outline"
                       onPress={()=>{
                         listStore.deleteInList(state,key);
                         listStore.saveList();
